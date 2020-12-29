@@ -1,0 +1,20 @@
+server:
+  port: 8099
+spring:
+  redis:
+    database: 0
+    host:
+    port:
+    password:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.0.0.1:3306/dev?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.blueCat.entity
