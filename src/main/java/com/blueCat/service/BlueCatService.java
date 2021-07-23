@@ -17,4 +17,11 @@ public interface BlueCatService {
      * @return: List<BlueCatDemo>
      */
     List<BlueCatDemo> outDemo();
+
+    /**
+     * 保存
+     * @param blueCatDemos
+     * @return
+     */
+    Integer save(List<BlueCatDemo> blueCatDemos);
 }

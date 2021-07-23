@@ -24,22 +24,28 @@ public class BlueCatServiceImpl implements BlueCatService {
     @Autowired
     private BlueCatMapper blueCatMapper;
 
-    @Autowired
-    private RedisUtils redisUtils;
+//    @Autowired
+//    private RedisUtils redisUtils;
 
     @Override
     @Transactional(readOnly = true)
     public List<BlueCatDemo> outDemo() {
         List<BlueCatDemo> blueCatDemos;
-        String outDemo1 = (String) redisUtils.get(CacheConst.BLUE_CAT_DEMO_1);
-        if (StringUtils.isBlank(outDemo1)) {
+//        String outDemo1 = (String) redisUtils.get(CacheConst.BLUE_CAT_DEMO_1);
+//        if (StringUtils.isBlank(outDemo1)) {
             blueCatDemos = blueCatMapper.outDemo();
-            if (CollectionUtils.isNotEmpty(blueCatDemos)) {
-                redisUtils.set(CacheConst.BLUE_CAT_DEMO_1, JSON.toJSONString(blueCatDemos));
-            }
-        } else {
-            blueCatDemos = JSON.parseArray(outDemo1, BlueCatDemo.class);
-        }
+//            if (CollectionUtils.isNotEmpty(blueCatDemos)) {
+//                redisUtils.set(CacheConst.BLUE_CAT_DEMO_1, JSON.toJSONString(blueCatDemos));
+//            }
+//        } else {
+//            blueCatDemos = JSON.parseArray(outDemo1, BlueCatDemo.class);
+//        }
         return blueCatDemos;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer save(List<BlueCatDemo> blueCatDemos) {
+        return blueCatMapper.save(blueCatDemos);
     }
 }

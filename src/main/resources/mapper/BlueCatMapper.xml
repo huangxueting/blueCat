@@ -11,4 +11,20 @@
         ORDER BY
             create_date ASC;
     </select>
+
+    <insert id="save">
+        INSERT INTO `blueCatDemo` (
+            `title`,
+            `create_date`,
+            `del_flag`
+        )
+        VALUES
+            <foreach collection="blueCatDemos" item="blue" separator=",">
+                (
+                     #{blue.title},
+                     #{blue.createDate},
+                     #{blue.delFlag}
+                 )
+            </foreach>
+    </insert>
 </mapper>
