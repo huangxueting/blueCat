@@ -3,14 +3,14 @@ server:
 spring:
   redis:
     database: 0
-    host:
-    port:
-    password:
+    host: 119.91.106.35
+    port: 9000
+    password: redisHXT8099!
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://120.0.0.1:3306/dev?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://119.91.106.35:7002/dev?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password:
+    password: mysqlHXT8099!
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
   configuration:

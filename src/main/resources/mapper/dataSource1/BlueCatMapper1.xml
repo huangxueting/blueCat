@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blueCat.mapper.dataSource1.BlueCatMapper1">
+    <select id="outDemo" resultType="com.blueCat.entity.BlueCatDemo">
+        SELECT
+            title AS title,
+            create_date AS createDate,
+            del_flag AS delFlag
+        FROM
+            blueCatDemo
+        ORDER BY
+            create_date ASC;
+    </select>
+
+    <insert id="save">
+        INSERT INTO `blueCatDemo` (
+            `title`,
+            `create_date`,
+            `del_flag`
+        )
+        VALUES
+            <foreach collection="blueCatDemos" item="blue" separator=",">
+                (
+                     #{blue.title},
+                     #{blue.createDate},
+                     #{blue.delFlag}
+                 )
+            </foreach>
+    </insert>
+</mapper>
