@@ -31,6 +31,21 @@ public class BlueCatServiceImpl implements BlueCatService {
 //    private RedisUtils redisUtils;
 
     @Override
+    @Transactional
+    public void saveTest() {
+        blueCatMapper.saveTest();
+        saveTest1();
+        int i = 1/0;
+    }
+
+//    @Override
+//    @Transactional
+    private void saveTest1() {
+        blueCatMapper.saveTest();
+//        int i = 1/0;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<BlueCatDemo> outDemo() {
         List<BlueCatDemo> blueCatDemos;

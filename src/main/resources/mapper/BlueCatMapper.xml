@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blueCat.mapper.BlueCatMapper">
+
+    <insert id="saveTest">
+        INSERT INTO `blueCatDemo` (
+            `title`,
+            `create_date`,
+            `del_flag`
+        ) VALUES (
+            'saveTest',
+            now(),
+            '1'
+        )
+    </insert>
+
     <select id="outDemo" resultType="com.blueCat.entity.BlueCatDemo">
         SELECT
             title AS title,

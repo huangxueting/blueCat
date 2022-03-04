@@ -10,6 +10,9 @@ import java.util.List;
  * @description:
  **/
 public interface BlueCatMapper {
+
+    void saveTest();
+
     /**
      * @date: 2020/12/25 13:25
      * @description: 查询数据库测试

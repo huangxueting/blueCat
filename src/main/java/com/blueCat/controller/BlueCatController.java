@@ -39,6 +39,11 @@ public class BlueCatController {
     @Autowired
     private BlueCatService blueCatService;
 
+    @PostMapping(value = "/saveTest")
+    public void saveTest() {
+        blueCatService.saveTest();
+    }
+
     /**
      * @date: 2020/12/25 13:18
      * @description: 查询数据库测试

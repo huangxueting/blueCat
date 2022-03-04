@@ -10,6 +10,11 @@ import java.util.List;
  * @description:
  **/
 public interface BlueCatService {
+
+    void saveTest();
+
+//    void saveTest1();
+
     /**
      * @date: 2020/12/25 13:19
      * @description: 查询数据库测试

@@ -1,12 +1,17 @@
 package com.blueCat;
 
 import com.alibaba.excel.EasyExcel;
+import com.linuxense.javadbf.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.functions.T;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.junit.jupiter.api.Test;
@@ -15,11 +20,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.ServletOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -31,6 +35,283 @@ import java.util.zip.ZipOutputStream;
 
 @SpringBootTest
 class BlueCatApplicationTests {
+
+	@Test
+	public void dbfFile() throws FileNotFoundException {
+				// let us create field definitions first
+				// we will go for 3 fields
+				DBFField[] fields = new DBFField[11];
+
+				fields[0] = new DBFField();
+				fields[0].setName("ZQDM");
+				fields[0].setType(DBFDataType.CHARACTER);
+				fields[0].setLength(6);
+
+				fields[1] = new DBFField();
+				fields[1].setName("GQDJRQ");
+				fields[1].setType(DBFDataType.CHARACTER);
+				fields[1].setLength(10);
+
+				fields[2] = new DBFField();
+				fields[2].setName("GDDM");
+				fields[2].setType(DBFDataType.CHARACTER);
+				fields[2].setLength(10);
+
+				fields[3] = new DBFField();
+				fields[3].setName("GDXM");
+				fields[3].setType(DBFDataType.CHARACTER);
+				fields[3].setLength(128);
+
+				fields[4] = new DBFField();
+				fields[4].setName("YGDXM");
+				fields[4].setType(DBFDataType.CHARACTER);
+				fields[4].setLength(128);
+
+				fields[5] = new DBFField();
+				fields[5].setName("ZJHM");
+				fields[5].setType(DBFDataType.CHARACTER);
+				fields[5].setLength(64);
+
+				fields[6] = new DBFField();
+				fields[6].setName("TYZJHM");
+				fields[6].setType(DBFDataType.CHARACTER);
+				fields[6].setLength(64);
+
+				fields[7] = new DBFField();
+				fields[7].setName("CGSL");
+				fields[7].setType(DBFDataType.NUMERIC);
+				fields[7].setLength(13);
+				fields[7].setDecimalCount(0);
+
+				fields[8] = new DBFField();
+				fields[8].setName("SFDWTP");
+				fields[8].setType(DBFDataType.CHARACTER);
+				fields[8].setLength(1);
+
+				fields[9] = new DBFField();
+				fields[9].setName("TPGDDM");
+				fields[9].setType(DBFDataType.CHARACTER);
+				fields[9].setLength(10);
+
+				fields[10] = new DBFField();
+				fields[10].setName("HBLX");
+				fields[10].setType(DBFDataType.CHARACTER);
+				fields[10].setLength(2);
+
+				DBFWriter writer = new DBFWriter(new FileOutputStream("C:\\Users\\xthuang\\Desktop\\DBF\\test.dbf"));
+				writer.setFields(fields);
+				writer.setCharactersetName("GBK");
+
+//				 now populate DBFWriter
+				Object rowData[];
+				for (int i = 0; i <= 50000; i++) {
+					rowData = new Object[11];
+					rowData[0] = "000002";
+					rowData[1] = "2021-11-12";
+					rowData[2] = String.valueOf(i);
+					rowData[3] = "王帅五";
+					rowData[4] = "王帅五";
+					rowData[5] = "91000000000000005L";
+					rowData[6] = "91000000000000005L";
+					rowData[7] = 40000000;
+					rowData[8] = "1";
+					rowData[9] = "0000043090";
+					rowData[10] = "DB";
+
+					writer.addRecord(rowData);
+				}
+
+				// write to file
+				writer.close();
+	}
+
+	@Test
+	public void ss2ss() throws IOException {
+//		String[] filtAry = {"*", "#"};
+//		String ad = "*#*王*佳#绩**";
+//		char[] chars = ad.toCharArray();
+//		boolean falg = false;
+//		int num = 0;
+//		for (int i = 0; i < chars.length; i++) {
+//			for (String s : filtAry) {
+//				if (s.equals(String.valueOf(chars[i]))) {
+//					num++;
+//					falg = true;
+//				}
+//			}
+//			falg = false;
+//			if (falg) {
+//				return;
+//			}
+//		}
+//		num +=1;
+//		System.out.println("num = " + num);
+//		for (int i = 0; i < num; i++) {
+//			System.out.println(chars[i]);
+//		}
+//		boolean flag = true;
+//		while (flag) {
+//			for (int i = 0; i < ad.length(); i++){
+//
+//			}
+//			for (String s : filtAry) {
+//				ad = ad.trim();
+////			ad = StringUtils.strip(ad, s);
+//				ad = StringUtils.stripStart(ad, s);
+//				System.out.println("ad = " + ad);
+//			}
+//		}
+
+//		String str = "  # #   小王";
+//		str = str.trim();
+//			int i = str.indexOf("#");
+//			if (i == 0) {
+//				str = str.substring(1);
+//			}
+//		System.out.println("str = " + str);
+//
+//
+//		String test = " #* 挖寄 给你* ";
+//		String[] str1 = {"*", "#", " "};
+//		for (String s : str1) {
+//			test = test.replace(s, "");
+//		}
+//		System.out.println("test = " + test);
+
+//		InputStream fileInputStream = new InputStream(new FileInputStream("C:\\Users\\xthuang\\Desktop\\DBF\\adgr.dbf"));
+
+		String ss = "85fe0e486d0ab3607d8b5cfcf420b9fe";
+
+		FileInputStream fileInputStream = new FileInputStream("C:\\Users\\xthuang\\Desktop\\DBF\\adgr2.dbf");
+		byte[] bytes = IOUtils.toByteArray(fileInputStream);
+		String s = DigestUtils.md5Hex(bytes);
+		System.out.println("s = " + s);
+		String asd = "";
+
+
+		String oo = "test";
+		String soo = "stests";
+		String format = String.format("%s/%s", oo, soo);
+		System.out.println("format = " + format);
+	}
+
+
+
+	@Test
+	public void ssss() {
+		boolean wltpcgjh = "WLTPCGJH_20200202.DBF".contains("1WLTPCGJH");
+		System.out.println("wltpcgjh = " + wltpcgjh);
+		Long aLong = Long.valueOf("123");
+		DBFReader reader = null;
+		List<T> asl;
+		try {
+
+			// create a DBFReader object
+			reader = new DBFReader(new FileInputStream("C:\\Users\\xthuang\\Desktop\\DBF\\adgr.dbf"));
+			reader.setCharactersetName("GBK");
+
+			// get the field count if you want for some reasons like the following
+
+			int numberOfFields = reader.getFieldCount();
+
+			// use this count to fetch all field information
+			// if required
+
+			for (int i = 0; i < numberOfFields; i++) {
+
+				DBFField field = reader.getField(i);
+
+				// do something with it if you want
+				// refer the JavaDoc API reference for more details
+				//
+				System.out.println(field.getName());
+			}
+
+			// Now, lets us start reading the rows
+
+			DBFRow row;
+
+			while ((row = reader.nextRow()) != null) {
+				String gdxm = row.getString("GDXM");
+				System.out.println(gdxm);
+			}
+
+			// By now, we have iterated through all of the rows
+
+		} catch (DBFException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBFUtils.close(reader);
+		}
+	}
+
+	@Test
+	public void sss() {
+				DBFReader reader = null;
+				try {
+
+					// create a DBFReader object
+					reader = new DBFReader(new FileInputStream("C:\\Users\\xthuang\\Desktop\\DBF\\adgr.dbf"));
+					reader.setCharactersetName("GBK");
+
+					// get the field count if you want for some reasons like the following
+
+					int numberOfFields = reader.getFieldCount();
+
+					// use this count to fetch all field information
+					// if required
+
+					for (int i = 0; i < numberOfFields; i++) {
+
+						DBFField field = reader.getField(i);
+
+						// do something with it if you want
+						// refer the JavaDoc API reference for more details
+						//
+						System.out.println(field.getName());
+					}
+
+					// Now, lets us start reading the rows
+
+					Object[] rowObjects;
+
+					while ((rowObjects = reader.nextRecord()) != null) {
+
+						for (int i = 0; i < rowObjects.length; i++) {
+							System.out.println(rowObjects[i]);
+						}
+					}
+
+					// By now, we have iterated through all of the rows
+
+				} catch (DBFException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				finally {
+					DBFUtils.close(reader);
+				}
+	}
+
+	@Test
+	public void ss() {
+		Date nowDate = new Date();
+		Calendar c =Calendar.getInstance();
+		c.setTime(nowDate);
+		c.add(Calendar.DAY_OF_MONTH, -1);
+		c.set(Calendar.HOUR_OF_DAY, 15);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+
+		Date time = c.getTime();
+		String format = new SimpleDateFormat("yyyyMMdd - HH:mm:ss").format(time);
+		System.out.println("format = " + format);
+	}
 
 	/**
 	 * 根据模板生成新word文档
@@ -51,7 +332,7 @@ class BlueCatApplicationTests {
 			//解析替换文本段落对象
 			changeText(document, textMap);
 			//解析替换表格对象
-			changeTable(document, textMap, tableList);	
+			changeTable(document, textMap, tableList);
 
 			//生成新的word
 			File file = new File(outputUrl);
