@@ -3,8 +3,11 @@ package com.blueCat.utils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 引自 https://blog.csdn.net/qq_35973977/article/details/77711669
@@ -37,7 +40,7 @@ public class AesEncodeUtil {
      * 私钥
      * AES固定格式为128/192/256 bits.即：16/24/32bytes。DES固定格式为128bits，即8bytes。
      */
-    private static final String AES_KEY = "ldELOMLavkU9WKFt";
+    private static final String AES_KEY = "cwB0LU3GQFQWYyzC";
 
     /**
      * 字符补全
@@ -189,7 +192,7 @@ public class AesEncodeUtil {
 //        String content = "3030|"+ (System.currentTimeMillis()-500000 )+"|JMQShv5CaXjJUoGX";
 //        test(content);
 
-        String content = "431321199407163777";
+        String content = "431224198912254337";
         String e = encryptNoPadding(content);
         System.out.println("加密后：" + e);
         String d = decryptNoPadding(e);
