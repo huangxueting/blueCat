@@ -4,7 +4,7 @@ spring:
   redis:
     database: 0
     host: 119.91.106.35
-    port: 9000
+    port: 7004
     password: redisHXT8099!
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

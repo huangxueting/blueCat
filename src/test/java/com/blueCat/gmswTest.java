@@ -5,7 +5,9 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.blueCat.entity.CompanyHasImgModel;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +17,45 @@ import java.util.*;
 
 @SpringBootTest
 public class gmswTest {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+
+    public static String produceCertificateNumber(String orgCode, int trainLevelCode, long orderIndex) {
+        StringBuilder sb = new StringBuilder();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int year = calendar.get(Calendar.YEAR);
+        if (orgCode == null || orgCode.length() == 0) {
+            sb.append("00");
+        } else if (orgCode.length() == 1) {
+            sb.append("0");
+        }
+        sb.append(orgCode);
+        String trainLevelCodeStr = String.format("%02d", trainLevelCode);
+        String orderIndexStr = String.format("%07d", orderIndex);
+        sb.append(year).append(trainLevelCodeStr).append(orderIndexStr);
+        return sb.toString();
+    }
+    @Test
+    public void demo3() {
+        String jg = this.produceCertificateNumber("jg", 202401, 0);
+        System.out.println("jg = " + jg);
+        Long aLong = redisTemplate.opsForList().leftPush("testKey", jg);
+        Object testKey = redisTemplate.opsForList().rightPop("testKey");
+
+    }
+
+    @Test
+    public void demo31() {
+        String jg = "综合管理>（二）项目办理开工手续情况。>未取得开工手续已开工。";
+        String[] split = jg.split(">");
+        List<String> strings = Arrays.asList(split);
+        for (String string : strings) {
+            System.out.println("string = " + string);
+        }
+    }
 
     @Test
     public void demo2() {
