@@ -132,7 +132,14 @@
 			<artifactId>easypoi-annotation</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-    </dependencies>
+
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.14</version>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>
